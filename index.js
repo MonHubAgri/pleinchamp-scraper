@@ -32,6 +32,3 @@ app.listen(PORT, () => {
   console.log(`🚀 Serveur lancé sur le port ${PORT}`);
 <<<<<<< HEAD
 });
-=======
-});
->>>>>>> 238d73a (Sauvegarde des modifications locales avant rebase)
