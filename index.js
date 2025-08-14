@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 (async () => {
-  const url = 'https://www.pleinchamp.com/actualites';
+  const url = 'https://www.pleinchamp.com/recherche?type_de_contenu=actualites';
   try {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
@@ -22,4 +22,5 @@ const cheerio = require('cheerio');
   } catch (err) {
     console.error('Erreur :', err.message);
   }
+
 })();
