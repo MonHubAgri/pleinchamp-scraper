@@ -1,26 +1,33 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+// index.js
 
-(async () => {
-  const url = 'https://www.pleinchamp.com/recherche?type_de_contenu=actualites';
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware simple pour afficher les requêtes entrantes
+app.use((req, res, next) => {
+  console.log(`Requête reçue : ${req.method} ${req.url}`);
+  next();
+});
+
+// Route principale
+app.get('/', (req, res) => {
+  res.send('✅ Pleinchamp Scraper est en ligne !');
+});
+
+// Exemple de route pour lancer le scraping (à adapter selon ton besoin)
+app.get('/scrape', async (req, res) => {
   try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-    const articles = [];
-
-    $('.card-article').each((i, el) => {
-      articles.push({
-        titre: $(el).find('h2').text().trim(),
-        lien: `https://www.pleinchamp.com${$(el).find('a').attr('href')}`,
-        description: $(el).find('p').text().trim(),
-        image: $(el).find('img').attr('src'),
-        date: $(el).find('time').attr('datetime')
-      });
-    });
-
-    console.log(articles);
-  } catch (err) {
-    console.error('Erreur :', err.message);
+    console.log('🔍 Démarrage du scraping...');
+    // Ton code de scraping ici (axios, cheerio, puppeteer, etc.)
+    res.send('Scraping terminé avec succès.');
+  } catch (error) {
+    console.error('❌ Erreur pendant le scraping :', error);
+    res.status(500).send('Erreur serveur');
   }
+});
 
-})();
+// Démarrage du serveur
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur lancé sur le port ${PORT}`);
+});
